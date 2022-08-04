@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+>
+<style>
+	.full-height-sidebar {
+	  height: 100vw;
+	  background: LightGray;
+	  padding-top: 1em;
+	  padding-left: 2em;
+  	  margin-left: -15px;
+	}
+</style>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<div class="full-height-sidebar">
+		<h3>Navigations</h3>
+		<a href="#" th:href="@{/logout}">Logout</a>
+		<p>
+		<div th:if="${#httpServletRequest.requestURI != '/'}">
+			<div sec:authorize="isAuthenticated()">
+				<a href="#" th:href="@{/}">Home</a>
+			</div>
+		</div>
+		<div th:if="${#httpServletRequest.requestURI != '/adminpage'}">
+			<div sec:authorize="hasAuthority('Administrator')">
+				<a href="#" th:href="@{/adminpage}">Admin Page</a>
+			</div>
+		</div>
+		<div th:if="${#httpServletRequest.requestURI != '/contentpage'}">
+			<div sec:authorize="hasAuthority('Content editor')">
+				<a href="#" th:href="@{/contentpage}">Contenteditor Page</a>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
