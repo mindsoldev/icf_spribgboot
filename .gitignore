@@ -25,4 +25,7 @@ hs_err_pid*
 #Eclipse project files
 .settings
 target
+.mvn
 
+# csomagolás
+csomag
