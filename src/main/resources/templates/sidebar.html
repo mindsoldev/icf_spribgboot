@@ -27,12 +27,12 @@
 			</div>
 		</div>
 		<div th:if="${#httpServletRequest.requestURI != '/adminpage'}">
-			<div sec:authorize="hasAuthority('Administrator')">
+			<div sec:authorize="hasAuthority('ADMIN')">
 				<a href="#" th:href="@{/adminpage}">Admin Page</a>
 			</div>
 		</div>
 		<div th:if="${#httpServletRequest.requestURI != '/contentpage'}">
-			<div sec:authorize="hasAuthority('Content editor')">
+			<div sec:authorize="hasAuthority('EDITOR')">
 				<a href="#" th:href="@{/contentpage}">Contenteditor Page</a>
 			</div>
 		</div>
