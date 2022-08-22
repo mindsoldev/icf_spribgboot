@@ -1,16 +1,18 @@
-name: cloudrun-deploy-production
+name: cloudrun-deploy-staging
 on:
   push:
     branches:
-      - main
+      - staging
 
 jobs:
   build:
-    name: 'Cloud Run Production Deployment'
+    name: 'Cloud Run staging Deployment'
     runs-on: ubuntu-latest
     steps:
       - name: 'Checkout'
-        uses: actions/checkout@master
+        uses: actions/checkout@v3
+        with:
+          ref: staging
         
       - name: 'Setup GCP Service Account'
         uses: google-github-actions/setup-gcloud@master
@@ -25,18 +27,18 @@ jobs:
       - name: 'Build'
         env:
           GCP_PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
-          ENVIRONMENT: 'production'
+          ENVIRONMENT: 'staging'
         run: make gcloud-docker-build
         
       - name: 'Push'
         env:
           GCP_PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
-          ENVIRONMENT: 'production'
+          ENVIRONMENT: 'staging'
         run: make gcloud-docker-push
 
       - name: 'Deploy'
         env:
           GCP_PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
-          ENVIRONMENT: 'production'
+          ENVIRONMENT: 'staging'
         run: make gcloud-run-deploy
         
