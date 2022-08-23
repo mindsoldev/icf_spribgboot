@@ -25,7 +25,7 @@ jobs:
         run: make gcloud-docker-init
         
       - name: 'Grant permission'
-        run chmod a+x ./mvnw
+        run: chmod a+x ./mvnw
 
       - name: 'Build'
         env:
