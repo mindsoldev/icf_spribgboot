@@ -25,7 +25,10 @@ hs_err_pid*
 #Eclipse project files
 .settings
 target
-.mvn
+
+# kell a cloud run számára
+#.mvn
+!.mvn/**/*.jar
 
 # csomagolás
 csomag
