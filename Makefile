@@ -4,9 +4,21 @@ APP = icf-test
 #ENVIRONMENT =		--> környezeti változóból jön egyébként pl.: staging
 # $env:ENVIRONMENT = 'staging'
 
-test:
-	@echo $env:GCP_PROJECT_ID
-	@echo $env:ENVIRONMENT
+set-dev-environment:
+	set GCP_PROJECT_ID = 'potent-plasma-359706'
+	set ENVIRONMENT = 'dev'
+	
+set-staging-environment:
+	set GCP_PROJECT_ID = 'potent-plasma-359706'
+	set ENVIRONMENT = 'staging'
+	
+set-prod-environment:
+	set GCP_PROJECT_ID = 'potent-plasma-359706'
+	set ENVIRONMENT = 'prod'
+	
+test-environment:
+	@echo GCP_PROJECT_ID = %GCP_PROJECT_ID%
+	@echo ENVIRONMENT = %ENVIRONMENT%
 
 # GCloud-specific targets
 gcloud-docker-init:
