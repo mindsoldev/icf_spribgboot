@@ -4,6 +4,9 @@ on:
     branches:
       - staging
 
+variables:
+    ENVIRONMENT: 'staging'
+
 jobs:
   build:
     name: 'Cloud Run staging Deployment'
@@ -39,7 +42,7 @@ jobs:
       - name: 'Build'
         env:
           GCP_PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
-          ENVIRONMENT: 'staging'
+          ENVIRONMENT: $ENVIRONMENT
         run: make gcloud-docker-build
         
       - name: 'Push'
