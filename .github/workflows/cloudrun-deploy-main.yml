@@ -1,0 +1,49 @@
+name: cloudrun-deploy-main
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    name: 'Cloud Run main Deployment'
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'Checkout'
+        uses: actions/checkout@v3
+        with:
+          ref: main
+        
+      - id: 'auth'
+        uses: 'google-github-actions/auth@v0'
+        with:
+          credentials_json: '${{ secrets.GCP_SERVICE_ACCOUNT_SECRET }}'
+      - name: 'Set up Cloud SDK'
+        uses: 'google-github-actions/setup-gcloud@v0'
+      - name: 'Use gcloud CLI'
+        run: 'gcloud info'
+      
+      - name: 'Configure Docker'
+        run: make gcloud-docker-init
+        
+      - name: 'Grant permission'
+        run: chmod a+x ./mvnw
+
+      - name: 'Build'
+        env:
+          GCP_PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
+          ENVIRONMENT: 'main'
+        run: make gcloud-docker-build
+        
+      - name: 'Push'
+        env:
+          GCP_PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
+          ENVIRONMENT: 'main'
+        run: make gcloud-docker-push
+
+      - name: 'Deploy'
+        env:
+          GCP_PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
+          ENVIRONMENT: 'main'
+        run: make gcloud-run-deploy
+        
