@@ -38,7 +38,7 @@ public class AppController {
 	@Autowired
 	LoginAttemptService loginAttemptService;
 	
-	@RequestMapping("/")
+	@RequestMapping(value={"/", "/index"})
 	public String viewHomePage(Model model) {
 		
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
